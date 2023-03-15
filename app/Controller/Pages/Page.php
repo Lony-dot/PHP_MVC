@@ -14,14 +14,23 @@ class Page{
     }
 
     /**
+     * Método responsável por renderizar o rodapé da página
+     */
+    private static function getFooter()
+    {
+        return View::render('pages/footer');
+    }
+
+    /**
      * Método responsável por retornar o conteúdo (view) da nossa página  genérica.
      * @return string
      */
     public static function getPage($title, $content){
         return View::render('pages/page',[
-           'title' => $title,
-           'header' =>self::getHeader(),
-           'content' => $content
+           'title'   => $title,
+           'header'  => self::getHeader(),
+           'content' => $content,
+           'footer'  => self::getFooter()
         ]);
 
     }
