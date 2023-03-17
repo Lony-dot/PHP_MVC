@@ -3,6 +3,7 @@
 namespace App\Controller\Pages;
 
 use \App\Utils\View;
+use \App\Model\Entity\Organization;
 
 class Home extends Page{
 
@@ -11,12 +12,19 @@ class Home extends Page{
      * @return string
      */
     public static function getHome(){
+        //ORGANIZAÇÃO
+        $obOrganization = new Organization;
+
+        /*echo "<pre>";
+        print_r($obOrganization);
+        echo "</pre>"; exit;*/
+        
         //VIEW DA HOME
       $content =  View::render('pages/home',
         [
-            'name' => 'WDEV - Canal',
-            'description' => 'Canal do youtube: https://youtube.com.br/wdevoficial',
-            'site' => 'https://youtube.com.br/wdevoficial',
+            'name'        => $obOrganization->name,
+            'description' => $obOrganization->description,
+            'site'        => $obOrganization->site,
         ]);
 
         //RETORNA A VIEW DA PÁGINA
