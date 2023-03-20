@@ -5,7 +5,7 @@ namespace App\Controller\Pages;
 use \App\Utils\View;
 use \App\Model\Entity\Organization;
 
-class Home extends Page{
+class About extends Page{
 
     /**
      * Método responsável por retornar o conteúdo (view) da nossa home
@@ -20,13 +20,15 @@ class Home extends Page{
         echo "</pre>"; exit;*/
         
         //VIEW DA HOME
-      $content =  View::render('pages/home',
+      $content =  View::render('pages/about',
         [
-            'name'        => $obOrganization->name
+            'name'        => $obOrganization->name,
+            'description' => $obOrganization->description,
+            'site'        => $obOrganization->site,
         ]);
 
         //RETORNA A VIEW DA PÁGINA
-        return parent::getPage('HOME > WDEV', $content);
+        return parent::getPage('SOBRE > WDEV', $content);
 
     }
 }
