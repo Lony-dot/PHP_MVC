@@ -8,10 +8,10 @@ use \App\Model\Entity\Organization;
 class About extends Page{
 
     /**
-     * Método responsável por retornar o conteúdo (view) da nossa home
+     * Método responsável por retornar o conteúdo (view) da página de Sobre WDEV
      * @return string
      */
-    public static function getHome(){
+    public static function getAbout(){
         //ORGANIZAÇÃO
         $obOrganization = new Organization;
 

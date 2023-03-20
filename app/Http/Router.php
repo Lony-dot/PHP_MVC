@@ -176,7 +176,7 @@ class Router
             if(preg_match($patternRoute,$uri,$matches))
             {
                 //VERIFICA O MÉTODO
-                if($methods[$httpMethod])
+                if(isset($methods[$httpMethod]))
                 {
                     //REMOVE A PRIMEIRA POSIÇÃO
                     unset($matches[0]);
