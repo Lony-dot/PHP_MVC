@@ -2,31 +2,69 @@
 
 namespace App\Controller\Pages;
 
-use \App\Utils\View;
+use App\Utils\View;
 use \App\Model\Entity\Testimony as EntityTestimony;
+use \WilliamCosta\DatabaseManager\Pagination;
 
-
-class Testimony extends Page{
+class Testimony extends Page
+{
 
     /**
-     * Método responsável por retornar o conteúdo (view) de depoimentos
+     * Método responsável por obter a renderização dos itens de depoimentos para a página
+     * @param Request $request
+     * @param Pagination $obPagination
      * @return string
      */
-    public static function getTestimonies(){
-   
-        /*echo "<pre>";
-        print_r($obOrganization);
-        echo "</pre>"; exit;*/
+    private static function getTestimonyItems($request,&$obPagination)
+    {
+        //DEPOIMENTOS
+        $itens = '';
+
+        //QUANTIDADE TOTAL DE REGISTRO
+        $quantidadeTotal = EntityTestimony::getTestimonies(null,null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
         
-        //VIEW DE DEPOIMENTOS
-      $content =  View::render('pages/testimonies',
-        [
-           
+        //PÁGINA ATUAL
+        $queryParams = $request->getQueryParams();
+        $paginaAtual = $queryParams['page'] ?? 1;
+        
+        //INSTÂNCIA DE PAGINAÇÃO
+        $obPagination = new Pagination($quantidadeTotal,$paginaAtual,5);
+
+        //RESULTADOS DA PÁGINA
+        $results = EntityTestimony::getTestimonies(null,'id DESC',$obPagination->getLimit());
+
+        //RENDERIZA O ITEM
+        while($ObTestimony = $results->fetchObject(EntityTestimony::class))
+        {
+            //VIEW DE DEPOIMENTOS
+            $itens .= View::render('pages/testimony/item',[
+                'nome'     => $ObTestimony->nome,
+                'mensagem' => $ObTestimony->mensagem,
+                'data'     => date('d/m/Y H:i:s', strtotime($ObTestimony->data))
+            ]);
+        }
+
+        //RETORNA OS DEPOIMENTOS
+        return $itens;
+    }
+
+    /**
+    * Método responsável por retornar o conteúdo (view) de depoimentos
+    * @param Request $request
+    * @return string
+    */
+    public static function getTestimonies($request)
+    {
+        
+        //RETORNA A VIEW DE DEPOIMENTOS
+        $content = View::render('pages/testimonies', [
+            'itens' => self::getTestimonyItems($request,$obPagination),
+            'pagination' => parent::getPagination($request,$obPagination)
         ]);
-
+        
         //RETORNA A VIEW DA PÁGINA
-        return parent::getPage('DEPOIMENTOS > WDEV', $content);
-
+        return parent::getPage('DEPOIMENTOS', $content);
+        
     }
 
     /**
@@ -36,15 +74,19 @@ class Testimony extends Page{
      */
     public static function insertTestimony($request)
     {
-      //DADOS DO POST
-      $postVars = $request->getPostVars();
+        //DADOS RECEBIDOS VIA POST
+        $postVars= $request->getPostVars();
 
-      //NOVA INSTÂNCIA DE DEPOIMENTO
-      $obTestimony = new EntityTestimony;
-      $obTestimony->nome = $postVars['nome'];
-      $obTestimony->mensagem = $postVars['mensagem'];
-      $obTestimony->cadastrar();
 
-      return self::getTestimonies();
+        //NOVA INSTÂNCIA DE DEPOIMENTO
+        $ObTestimony = new EntityTestimony;
+        $ObTestimony->nome = $postVars['nome'];
+        $ObTestimony->mensagem = $postVars['mensagem'];
+        $ObTestimony->cadastrar();
+
+        //RETORNA A PÁGINA DE LISTAGEM DE DEPOIMENTOS
+        return self::getTestimonies($request);
+            
     }
+
 }

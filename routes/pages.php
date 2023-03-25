@@ -20,8 +20,8 @@ $obRouter->get('/sobre',[
 
 //ROTA DEPOIMENTOS
 $obRouter->get('/depoimentos',[
-    function(){
-        return new Response(200,Pages\Testimony::getTestimonies());
+    function($request){
+        return new Response(200,Pages\Testimony::getTestimonies($request));
     }
 ]);
 
