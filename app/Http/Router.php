@@ -75,6 +75,10 @@ class Router
                 continue;
             }
         }
+        
+        echo "<pre>";
+        print_r($params);
+        echo "</pre>"; exit;
 
         //VARIÁVEIS DA ROTA
         $params['variables'] = [];

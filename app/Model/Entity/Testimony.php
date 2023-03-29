@@ -59,7 +59,7 @@ class Testimony
      *Método responsável por retornar Depoimentos
      *@param string $where
      *@param string $$order
-     *@param string $limit
+     *@param string $limit 
      *@param string $field
      *@return PDOStatement
      */
