@@ -67,7 +67,7 @@ class Router
     {
   
         //VALIDAÇÃO DOS PARÂMETROS
-        foreach($params as $key=>$value)
+        foreach($params as $key =>$value)
         {
             if($value instanceof Closure)
             {
@@ -78,7 +78,7 @@ class Router
         }
 
         //MIDDLEWARES DA ROTA
-        $params['middleware'] = $params['middlewares'] ?? [];
+        $params['middlewares'] = $params['middlewares'] ?? [];
         
         
 
@@ -229,10 +229,9 @@ class Router
                 $name = $parameter->getName();
                 $args[$name] = $route['variables'][$name] ?? '';
            }
-           
           
            //RETORNA A EXECUÇÃO DA FILA DE MIDDLEWARES
-           return (new MiddleQueue($route['middlewares'], $route['controller'],$args))->next($this->request);
+           return (new MiddleQueue($route['middlewares'],$route['controller'],$args))->next($this->request);
         } catch (Exception $e) {
             return new Response($e->getCode(), $e->getMessage());
         }

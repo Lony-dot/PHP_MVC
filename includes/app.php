@@ -1,9 +1,10 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
 
-use App\Utils\View;
-use \WilliamCosta\DotEnv\Environment;
+require __DIR__ .'/../vendor/autoload.php';
+
+use \App\Utils\View;
+use  \WilliamCosta\DotEnv\Environment;
 use \WilliamCosta\DatabaseManager\Database;
 use \App\Http\Middleware\Queue as MiddlewareQueue;
 
@@ -19,17 +20,24 @@ Database::config(
     getenv('DB_PORT')
 );
 
-//DEFIBE A CONSTANTE DE URL DO PROJETO
+//DEFINE A CONSTANTE DE IRL DO PROJETO
 define('URL', getenv('URL'));
 
-//DEFINE O VALOR PADRÃO DAS VARIÁVEIS
+//DEFINE O VALOR PADR]AP DAS VARIÁVEIS
 View::init([
-        'URL' => URL
+    'URL' => URL
 ]);
+
 
 //DEFINE O MAPEAMENTO DE MIDDLEWARES
 MiddlewareQueue::setMap([
-    'maintenace' => \APP\Http\Middleware\Maintenance::class
+    'maintenance' => \App\Http\Middleware\Maintenance::class
+
+    ]);
+
+    //DEFINE O MAPEAMENTO DE MIDDLEWARES PADRÕES (EXECUTADOS EM TODAS AS ROTAS)
+MiddlewareQueue::setDefault([
+    'maintenance'
 
     ]);
 
