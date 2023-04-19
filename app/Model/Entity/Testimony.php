@@ -56,6 +56,16 @@ class Testimony
     }
 
     /**
+     * Método responsável por retornar um depoimento com base no seu ID
+     * @param integer $id
+     * @return Testimony
+     */
+    public static function getTestimonyById($id)
+    {
+        return self::getTestimonies('id = '.$id)->fetchObject(self::class);
+    }
+
+    /**
      *Método responsável por retornar Depoimentos
      *@param string $where
      *@param string $$order
