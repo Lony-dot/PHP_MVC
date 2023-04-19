@@ -43,6 +43,17 @@ $obRouter->get('/admin/testimonies/{id}/edit',[
     }
 ]);
 
+//ROTA DE EDIÇÃO DE UM DEPOIMENTO (POST)
+$obRouter->post('/admin/testimonies/{id}/edit',[
+    'middlewares' => [
+        'required-admin-login'   
+        ],
+    function($request,$id){
+        return new Response(200,Admin\Testimony::setEditTestimony($request,$id));
+    }
+]);
+
+
  
 
  
