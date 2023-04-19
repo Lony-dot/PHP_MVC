@@ -60,7 +60,8 @@ class Testimony extends Page
     {
         //CONTEÚDO DA HOME
         $content = View::render('admin/modules/testimonies/index', [
-          'itens' =>  self::getTestimonyItems($request,$obPagination)
+          'itens'      =>  self::getTestimonyItems($request,$obPagination),
+          'pagination' => parent::getPagination($request, $obPagination)
         ]);
 
         //RETORNA A PÁGINA COMPLETA
