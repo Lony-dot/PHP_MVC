@@ -90,4 +90,15 @@ class Testimony
     {
         return (new Database('depoimentos'))->select($where,$order,$limit,$fields);
     }
+
+    /**
+     * Método responsável por excluir um depoimento do banco de dados
+     * @return boolean
+     */
+    public function excluir()
+    {
+        //EXCLUI O DEPOIMENTO DO BANCO DE DADOS
+         return (new Database('depoimentos'))->delete('id = '.$this->id);
+    }
+
 }
