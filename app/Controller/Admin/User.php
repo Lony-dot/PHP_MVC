@@ -221,55 +221,53 @@ class User extends Page
     }
 
      /**
-     * Método responsável por retornar o formulário de exclusão de um depoimento
-     * @param Request $request
+     * Método responsável por retornar o formulário de exclusão de um usuário
      * @param integer $id
      * @return string
      */
-    public static function getDeleteTestimony($request,$id)
+    public static function getDeleteUser($request,$id)
     {
-        //OBTÉM O DEPOIMENTO DO BANCO DE DADOS
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+         //OBTÉM O USUÁRIO DO BANCO DE DADOS
+         $obUser = EntityUser::getUserById($id);
 
-        //VALIDA A INSTÂNCIA
-        if(!$obTestimony instanceof EntityTestimony)
-        {
-            $request->getRouter()->redirect('/admin/testimonies');
-        }
+         //VALIDA A INSTÂNCIA
+         if(!$obUser instanceof EntityUser)
+         {
+             $request->getRouter()->redirect('/admin/users');
+         }
 
           //CONTEÚDO DO FORMULÁRIO
-          $content = View::render('admin/modules/testimonies/delete', [
-            'nome'     => $obTestimony->nome,
-            'mensagem' => $obTestimony->mensagem,
+          $content = View::render('admin/modules/users/delete', [
+            'nome'  => $obUser->nome,
+            'email' => $obUser-> email
           ]);
   
           //RETORNA A PÁGINA COMPLETA
-          return parent::getPanel('Excluir depoimento > WDEV', $content,'testimonies');
+          return parent::getPanel('Excluir usuário > WDEV', $content,'users');
       }
 
          /**
-     * Método responsável por excluir um depoimento
+     * Método responsável por excluir um usuário
      * @param Request $request
      * @param integer $id
      * @return string
      */
-    public static function setDeleteTestimony($request,$id)
+    public static function setDeleteUser($request,$id)
     {
-        //OBTÉM O DEPOIMENTO DO BANCO DE DADOS
-        $obUsers= EntityUsers::getTestimonyById($id);
-        
+         //OBTÉM O USUÁRIO DO BANCO DE DADOS
+         $obUser = EntityUser::getUserById($id);
 
-       //VALIDA A INSTÂNCIA
-       if(!$ObTestimony instanceof EntityTestimony)
-       {
-           $request->getRouter()->redirect('/admin/testimonies');
-       }
+         //VALIDA A INSTÂNCIA
+         if(!$obUser instanceof EntityUser)
+         {
+             $request->getRouter()->redirect('/admin/users');
+         }
 
-       //EXCLUIR O DEPOIMENTO
-       $ObTestimony->excluir();
+       //EXCLUIR O USUÁRIO
+       $obUser->excluir();
 
       //REDIRECIONA O USUÁRIO
-      $request->getRouter()->redirect('/admin/testimonies?status=deleted');
+      $request->getRouter()->redirect('/admin/users?status=deleted');
    }
 
 
