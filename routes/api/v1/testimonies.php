@@ -10,3 +10,11 @@ $obRouter->get('/api/v1/testimonies',[
         return new Response(200,Api\Testimony::getTestimonies($request), 'application/json');
     }
 ]);
+
+//ROTA DE CONSULTA INDIVIDUAL
+$obRouter->get('/api/v1/testimonies',[
+    function($request)
+    {
+        return new Response(200,Api\Testimony::getTestimonies($request), 'application/json');
+    }
+]);
