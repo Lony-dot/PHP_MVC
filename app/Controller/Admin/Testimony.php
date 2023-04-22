@@ -28,9 +28,6 @@ class Testimony extends Page
         
         //INSTÂNCIA DE PAGINAÇÃO
         $obPagination = new Pagination($quantidadeTotal,$paginaAtual,5);
-        /*echo "<pre>";
-        print_r($obPagination);
-        echo "<pre>"; exit;*/
 
         //RESULTADOS DA PÁGINA
         $results = EntityTestimony::getTestimonies(null,'id DESC',$obPagination->getLimit());
