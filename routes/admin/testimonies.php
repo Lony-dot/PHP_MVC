@@ -72,11 +72,3 @@ $obRouter->post('/admin/testimonies/{id}/delete',[
         return new Response(200,Admin\Testimony::setDeleteTestimony($request,$id));
     }
 ]);
-
-
-
-
-
- 
-
- 

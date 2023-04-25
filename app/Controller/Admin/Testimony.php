@@ -237,7 +237,7 @@ class Testimony extends Page
             $request->getRouter()->redirect('/admin/testimonies');
         }
 
-        //EXCLUIR O DEPOIMENTO
+        //EXCLUI O DEPOIMENTO
         $ObTestimony->excluir();
 
        //REDIRECIONA O USUÁRIO
@@ -246,5 +246,3 @@ class Testimony extends Page
 
 
 }
-      
-

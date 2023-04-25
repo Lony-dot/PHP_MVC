@@ -34,6 +34,13 @@ class Router
      */
     private $request;
 
+
+    /**
+     *Content type padrão do response
+     *@var string
+     */
+    private $contentType = 'text/html';
+
     /**
      * Método responsável por iniciar a classe
      * @param string $url
@@ -43,6 +50,16 @@ class Router
         $this->request = new Request($this);
         $this->url     = $url;
         $this->setPrefix();
+    }
+
+
+    /**
+     * Método responsável por alterar o valor do content type
+     * @param string $contentType
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
     }
 
     /**
@@ -233,7 +250,7 @@ class Router
            //RETORNA A EXECUÇÃO DA FILA DE MIDDLEWARES
            return (new MiddleQueue($route['middlewares'],$route['controller'],$args))->next($this->request);
         } catch (Exception $e) {
-            return new Response($e->getCode(), $e->getMessage());
+            return new Response($e->getCode(), $e->getMessage(),$this->contentType);
         }
     }
 

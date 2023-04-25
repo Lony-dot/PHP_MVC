@@ -34,6 +34,8 @@ class Api
         //PÁGINA
         $pages = $obPagination->getPages();
 
+     
+
         //RETORNO
         return 
         [

@@ -60,4 +60,25 @@ class Testimony extends Api
         ];
     }
 
+    /**
+     * Método responsável por  retornar os detalhes de um depoimento
+     * @param Request $request
+     * @param integer $id
+     * @return array
+     */
+    public static function getTestimony($request,$id)
+    {
+        //BUSCA DEPOIMENTO
+        $obTestimony = EntityTestimony::getTestimonyById($id);
+
+        //VALIDA SE O DEPOIMENTO EXISTE
+        if (!$obTestimony instanceof EntityTestimony) 
+        {
+            throw new \Exception("O depoimento ".$id." não foi encontrado", 404);
+            
+        }
+      
+    }
+    
+
 } 
