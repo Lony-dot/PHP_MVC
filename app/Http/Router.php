@@ -174,7 +174,7 @@ class Router
         $xUri = strlen($this->prefix) ? explode($this->prefix,$uri) : [$uri];
 
         //RETORNA A URI SEM PREFIXO
-        return end($xUri);
+        return rtrim(end($xUri), '/');
     }
 
     /**
@@ -250,7 +250,28 @@ class Router
            //RETORNA A EXECUÇÃO DA FILA DE MIDDLEWARES
            return (new MiddleQueue($route['middlewares'],$route['controller'],$args))->next($this->request);
         } catch (Exception $e) {
-            return new Response($e->getCode(), $e->getMessage(),$this->contentType);
+            return new Response($e->getCode(), $this->getErrorMessage($e->getMessage()),$this->contentType);
+        }
+    }
+
+    /**
+     * Método responsável por retornar a mensagem de erro de acordo com o content type
+     * @param string $message 
+     * @return mixed
+     */
+    private function getErrorMessage($message)
+    {
+        switch ($this->contentType) {
+            case 'application/json':
+                return 
+                [
+                    'error' => $message
+                ];
+                break;
+            
+            default:
+                return $message;
+                break;
         }
     }
 
