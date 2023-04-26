@@ -68,6 +68,10 @@ class Testimony extends Api
      */
     public static function getTestimony($request,$id)
     {
+        //VALIDA O ID DO DEPOIMENTO
+        if(!is_numeric($id))
+        throw new \Exception("O id '".$id."' não é válido", 400);
+
         //BUSCA DEPOIMENTO
         $obTestimony = EntityTestimony::getTestimonyById($id);
 
@@ -77,7 +81,26 @@ class Testimony extends Api
             throw new \Exception("O depoimento ".$id." não foi encontrado", 404);
             
         }
-      
+
+        //RETORNA OS DETALHES DO DEPOIMENTO
+        return [
+            'id'       => $obTestimony->id,
+            'nome'     => $obTestimony->nome,
+            'mensagem' => $obTestimony->mensagem,
+            'data'     => $obTestimony->data
+        ];
+    }
+
+    /**
+     * Método responsável por cadastrar um novo depoimento
+     * @param Request $request
+     */
+    public static function setNewTestimony($request)
+    {
+        return
+        [
+            'sucesso' => true
+        ];
     }
     
 
